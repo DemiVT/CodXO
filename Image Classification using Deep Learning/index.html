@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+</head>
+<body>
+    <h1>Image Classification</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadImage()">Upload Image</button>
+    <p id="result"></p>
+    
+    <script>
+        function uploadImage() {
+            const fileInput = document.getElementById('fileInput');
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = 'Predicted Class: ' + data.class;
+            });
+        }
+    </script>
+</body>
+</html>
